@@ -60,7 +60,7 @@ class PredictView(viewsets.GenericViewSet, mixins.CreateModelMixin,
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        predict_age = self.predict(request)
+        predict_age = self.predict(serializer.validated_data)
         serializer.validated_data.update({"uploader": request.user, "datetime": now(),
                                           "predict_age": predict_age})
         self.perform_create(serializer)

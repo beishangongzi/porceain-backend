@@ -45,3 +45,4 @@ class PrdictModel(models.Model):
     uploader = models.ForeignKey(to=User, on_delete=models.CASCADE)
     truth_age = models.ForeignKey(to=EmperorYear, on_delete=models.CASCADE, null=True, blank=True)
     predict_age = models.ForeignKey(to=EmperorYear, on_delete=models.CASCADE, related_name="predict_age")
+    hyper_spectral = models.IntegerField(default="0")

@@ -33,7 +33,10 @@ class PredictSerializer(ModelSerializer):
     # uploader = serializers.IntegerField(read_only=True, source="User.id")
     # truth_age = serializers.IntegerField(source="EmperorYear.id")
     # predict_age = serializers.IntegerField(source="EmperorYear.id")
+    choices = ((1, 1), (0, 0))
+    hyper_spectral = serializers.ChoiceField(choices)
     class Meta:
+        # fields = ["image", "name", "description", "value", "datetime", "uploader", "truth_age", "predict_age",   "hyper_spectral"]
         fields = "__all__"
         model = models.PrdictModel
         read_only_fields = ["id", "uploader", "datetime", "predict_age"]
