@@ -34,3 +34,14 @@ class Porcelain(models.Model):
     introduce = models.TextField()
     uploader = models.ForeignKey(to=User, on_delete=models.CASCADE)
     datetime = models.DateTimeField(default=django.utils.timezone.now)
+
+
+class PrdictModel(models.Model):
+    image = models.ImageField()
+    name = models.CharField(max_length=10, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    value = models.FloatField(null=True, blank=True)
+    datetime = models.DateTimeField(default=django.utils.timezone.now)
+    uploader = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    truth_age = models.ForeignKey(to=EmperorYear, on_delete=models.CASCADE, null=True, blank=True)
+    predict_age = models.ForeignKey(to=EmperorYear, on_delete=models.CASCADE, related_name="predict_age")

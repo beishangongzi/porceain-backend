@@ -11,5 +11,6 @@ router = DefaultRouter()
 router.register("porcelain", viewset=views.PorcelainView, basename="porcelain")
 router.register("dynasty", viewset=views.DynastyView, basename="dynasty")
 router.register("EmperorYear", viewset=views.EmperorYearView, basename="EmperorYear")
+router.register("predict", viewset=views.PredictView, basename="predict")
 
 urlpatterns += router.urls
