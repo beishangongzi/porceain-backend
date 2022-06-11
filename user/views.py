@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from drf_yasg.utils import swagger_auto_schema, swagger_serializer_method
 from django_redis import get_redis_connection
+from rest_framework.parsers import JSONParser, MultiPartParser
 
 from utils.tencent.msg import send_msg
 from . import serializers
@@ -16,7 +17,7 @@ from .auth.auth import JwtQueryParamsAuthentication
 
 class LoginView(APIView):
     authentication_classes = []
-
+    parser_classes = [MultiPartParser]
     @swagger_auto_schema(request_body=serializers.LoginSerializer)
     def post(self, request, *args, **kwargs):
         """
@@ -52,6 +53,7 @@ class LoginView(APIView):
 
 class LoginWithPassword(APIView):
     authentication_classes = []
+    parser_classes = [MultiPartParser]
 
     @swagger_auto_schema(request_body=serializers.LoginPassWordSerializer)
     def post(self, request, *args, **kwargs):
@@ -68,6 +70,7 @@ class LoginWithPassword(APIView):
 
 class MessageView(APIView):
     authentication_classes = []
+    parser_classes = [MultiPartParser]
 
     @swagger_auto_schema(request_body=serializers.MessageSerializer, )
     def post(self, request, *args, **kwargs):
