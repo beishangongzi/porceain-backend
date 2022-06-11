@@ -17,7 +17,7 @@ from .auth.auth import JwtQueryParamsAuthentication
 
 class LoginView(APIView):
     authentication_classes = []
-    parser_classes = [MultiPartParser]
+    parser_classes = [MultiPartParser, JSONParser]
     @swagger_auto_schema(request_body=serializers.LoginSerializer)
     def post(self, request, *args, **kwargs):
         """
@@ -41,14 +41,14 @@ class LoginView(APIView):
 
         phone = ser.validated_data["phone"]
         user_instance, flag = models.User.objects.get_or_create(phone=phone)
-        user_instance.token = str(uuid.uuid4())
+        # user_instance.token = str(uuid.uuid4())
         user_instance.save()
         payload = {
             "id": user_instance.id,
             "user_name": user_instance.username
         }
-        result = JwtQueryParamsAuthentication().create_token(payload, {"minutes": 3})
-        return Response({"status": True, "data": "123", "result": result})
+        token = JwtQueryParamsAuthentication().create_token(payload, {"minutes": 3})
+        return Response({"status": True, "username": user_instance.get_username(), "token": token})
 
 
 class LoginWithPassword(APIView):
@@ -64,13 +64,13 @@ class LoginWithPassword(APIView):
             "id": user_instance.id,
             "user_name": user_instance.username
         }
-        result = JwtQueryParamsAuthentication().create_token(payload, {"days": 3})
-        return Response({"status": True, "data": "123", "result": result})
+        token = JwtQueryParamsAuthentication().create_token(payload, {"days": 3})
+        return Response({"status": True, "user": user_instance.data, "token": token})
 
 
 class MessageView(APIView):
     authentication_classes = []
-    parser_classes = [MultiPartParser]
+    parser_classes = [MultiPartParser, JSONParser]
 
     @swagger_auto_schema(request_body=serializers.MessageSerializer, )
     def post(self, request, *args, **kwargs):
