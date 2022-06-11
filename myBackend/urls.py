@@ -20,9 +20,9 @@ from django.conf.urls.static import static
 from myBackend import settings
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path("users/", include("user.urls")),
-    path("items/", include("item.urls")),
-    path("porcelains/", include("predict_model.urls")),
+    path('v1/api/admin/', admin.site.urls),
+    path("v1/api/users/", include("user.urls")),
+    path("v1/api/items/", include("item.urls")),
+    path("v1/api/porcelains/", include("predict_model.urls")),
     path("", include("swagger_doc.urls"))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
