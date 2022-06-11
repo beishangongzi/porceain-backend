@@ -9,7 +9,10 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework.parsers import JSONParser, MultiPartParser
 from rest_framework import status
 from django.utils.timezone import now
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
+
+from user.permissions.permissions import IsSuperUser, IsSuperUserOrReadOnly
 from . import models
 from . import serializers
 
@@ -37,6 +40,7 @@ class EmperorYearView(ModelViewSet):
 
 
 class DynastyView(ModelViewSet):
+    permission_classes = [IsSuperUserOrReadOnly]
     queryset = models.Dynasty.objects.all()
     serializer_class = serializers.DynastySerializer
 
@@ -46,7 +50,6 @@ class PredictView(viewsets.GenericViewSet, mixins.CreateModelMixin,
                   mixins.ListModelMixin):
     queryset = models.PrdictModel.objects.all()
     serializer_class = serializers.PredictSerializer
-    parser_classes = [MultiPartParser]
 
     def create(self, request, *args, **kwargs):
         """
